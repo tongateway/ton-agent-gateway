@@ -1,33 +1,26 @@
-# Agent API Monorepo (TON)
+# Agent Gateway for TON
 
-Two separate folders are created:
+A secure gateway that lets AI agents request TON blockchain transactions while wallet owners keep full signing control via TON Connect.
 
-- `contract/` - TON FunC smart contract (`AgentVault`) with owner/admin/session-key policy
-- `api/` - Fastify Swagger API for signing/building/broadcasting vault transactions
+**Live at [tongateway.ai](https://tongateway.ai)** | **API docs at [api.tongateway.ai/docs](https://api.tongateway.ai/docs)**
 
-## Quick start
+## Repositories
 
-### Contract
+| Repository | Description |
+|---|---|
+| [ton-agent-gateway-api](https://github.com/pewpewgogo/ton-agent-gateway-api) | Cloudflare Worker API, MCP server, and skill definitions |
+| [ton-agent-gateway-client](https://github.com/pewpewgogo/ton-agent-gateway-client) | Dashboard and landing page (tongateway.ai) |
+| [ton-agent-gateway-contract](https://github.com/pewpewgogo/ton-agent-gateway-contract) | AgentVault smart contract (FunC) |
 
-```bash
-cd contract
-npm install
-npm run build
-npm test
-```
+## How it works
 
-### API
+1. **Connect wallet** — owner links their TON wallet on the dashboard
+2. **Create agent token** — generate a Bearer token for each AI agent
+3. **Agent requests transactions** — via REST API or MCP server, requests go to a pending queue
+4. **Owner approves** — the dashboard sends pending transactions to TON Connect for signing (auto-approve available)
 
-```bash
-cd api
-cp .env.example .env
-npm install
-npm run dev
-```
+## Integration
 
-Swagger will be available at `http://localhost:8080/docs`.
-
-The API includes generic transaction routes plus open4dev order-book helpers:
-
-- `POST /v1/open4dev/orders/create-ton`
-- `POST /v1/open4dev/orders/create-jetton`
+- **REST API** — `POST /v1/safe/tx/transfer` with `Authorization: Bearer TOKEN`
+- **MCP Server** — `npm install -g agent-gateway-mcp` for Claude, OpenClaw, and other MCP-compatible agents
+- **Claude Code Skill** — install from [tongateway.ai/skills.html](https://tongateway.ai/skills.html)
