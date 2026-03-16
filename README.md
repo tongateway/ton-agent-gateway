@@ -8,9 +8,10 @@ A secure gateway that lets AI agents request TON blockchain transactions while w
 
 | Repository | Description |
 |---|---|
-| [ton-agent-gateway-api](https://github.com/pewpewgogo/ton-agent-gateway-api) | Cloudflare Worker API, MCP server, and skill definitions |
+| [ton-agent-gateway-api](https://github.com/pewpewgogo/ton-agent-gateway-api) | Cloudflare Worker API and skill definitions |
 | [ton-agent-gateway-client](https://github.com/pewpewgogo/ton-agent-gateway-client) | Dashboard and landing page (tongateway.ai) |
 | [ton-agent-gateway-contract](https://github.com/pewpewgogo/ton-agent-gateway-contract) | AgentVault smart contract (FunC) |
+| [agent-gateway-mcp](https://github.com/pewpewgogo/agent-gateway-mcp) | MCP server for AI agents (`npm install -g agent-gateway-mcp`) |
 
 ## How it works
 
