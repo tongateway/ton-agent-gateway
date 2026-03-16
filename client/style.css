@@ -1,0 +1,151 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0a0e14;
+  color: #c5cdd9;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+h1 {
+  font-size: 20px;
+  color: #e2e8f0;
+}
+
+h2 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+section {
+  margin-bottom: 24px;
+  background: #131920;
+  border: 1px solid #1e2a3a;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.hint {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+.token-box {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.token-box code {
+  flex: 1;
+  background: #0a0e14;
+  border: 1px solid #1e2a3a;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #94a3b8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+button:disabled {
+  background: #1e2a3a;
+  color: #475569;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.pending-card {
+  background: #0a0e14;
+  border: 1px solid #1e2a3a;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 8px;
+}
+
+.pending-card .row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.pending-card .label {
+  color: #64748b;
+}
+
+.pending-card .value {
+  color: #e2e8f0;
+  font-family: monospace;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pending-card .actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.pending-card .actions button.reject {
+  background: #1e2a3a;
+  color: #ef4444;
+}
+
+.empty {
+  text-align: center;
+  color: #475569;
+  font-size: 13px;
+  padding: 16px;
+}
+
+#log {
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+#log .entry {
+  padding: 4px 0;
+  border-bottom: 1px solid #1e2a3a;
+  color: #94a3b8;
+}
+
+#log .entry.ok { color: #22c55e; }
+#log .entry.err { color: #ef4444; }
+
+.hidden { display: none; }

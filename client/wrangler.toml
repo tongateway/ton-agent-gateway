@@ -1,0 +1,11 @@
+name = "agent-gateway-client"
+account_id = "67fed51af58855d4ea1ea0263f4da84d"
+compatibility_date = "2025-01-01"
+workers_dev = true
+
+[[routes]]
+pattern = "tongateway.ai"
+custom_domain = true
+
+[assets]
+directory = "./public"

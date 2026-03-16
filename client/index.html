@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Gateway</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Agent Gateway</h1>
+      <div id="ton-connect"></div>
+    </header>
+
+    <section id="auth-section" class="hidden">
+      <h2>Agent Token</h2>
+      <p class="hint">Give this token to your agent so it can request transfers from your wallet.</p>
+      <div class="token-box">
+        <code id="agent-token">—</code>
+        <button id="copy-token" disabled>Copy</button>
+      </div>
+    </section>
+
+    <section id="pending-section" class="hidden">
+      <h2>Pending Requests</h2>
+      <p class="hint">Requests from your agent that need approval.</p>
+      <div id="pending-list">
+        <p class="empty">No pending requests</p>
+      </div>
+    </section>
+
+    <section id="log-section">
+      <h2>Activity Log</h2>
+      <div id="log"></div>
+    </section>
+  </div>
+
+  <script src="https://unpkg.com/@tonconnect/ui@2.0.12/dist/tonconnect-ui.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

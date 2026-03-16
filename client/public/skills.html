@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Gateway — Skills</title>
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    h3 { font-size: 14px; color: #94a3b8; margin: 20px 0 8px; }
+    p { margin-bottom: 12px; font-size: 14px; }
+    ul { margin: 0 0 12px 20px; font-size: 14px; }
+    li { margin-bottom: 4px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+    th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    th { color: var(--text-dim); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+    td code { font-size: 12px; }
+
+    /* Skill card */
+    .skill-card { margin-bottom: 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: border-color 0.3s; }
+    .skill-card:hover { border-color: var(--border-glow); }
+    .skill-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; gap: 12px; }
+    .skill-title { display: flex; align-items: center; gap: 10px; }
+    .skill-title h2 { margin: 0; font-size: 18px; color: var(--text-bright); }
+    .skill-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .skill-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.03em; }
+    .badge-claude { background: rgba(212,165,116,0.1); color: #d4a574; }
+    .badge-openclaw { background: rgba(52,211,153,0.1); color: var(--green); }
+    .badge-any { background: rgba(148,163,184,0.1); color: #94a3b8; }
+    .badge-mcp { background: rgba(59,130,246,0.1); color: var(--accent); }
+    .badge-skill { background: rgba(192,132,252,0.1); color: #c084fc; }
+    .skill-desc { font-size: 14px; color: #94a3b8; margin-bottom: 16px; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 1px solid var(--border); }
+    .tab { padding: 8px 16px; font-size: 13px; color: var(--text-dim); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.15s; background: none; border-top: none; border-left: none; border-right: none; font-family: var(--font-body); }
+    .tab:hover { color: #94a3b8; }
+    .tab.active { color: var(--text-bright); border-bottom-color: var(--accent); }
+    .tab-content { display: none; padding-top: 16px; }
+    .tab-content.active { display: block; }
+
+    /* Copy button */
+    .copy-btn { position: absolute; top: 8px; right: 8px; background: var(--border); border: none; color: var(--text-dim); font-size: 12px; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-family: var(--font-body); transition: all 0.2s; }
+    .copy-btn:hover { color: var(--text-bright); background: var(--border-glow); }
+    .copy-btn.copied { color: var(--green); }
+
+    /* Steps */
+    .step { margin-bottom: 16px; }
+    .step-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--accent); color: #fff; border-radius: 50%; font-size: 12px; font-weight: 600; margin-right: 8px; }
+    .step-title { font-size: 14px; color: var(--text-bright); font-weight: 500; }
+    .step-body { margin-left: 30px; margin-top: 8px; }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+
+  <nav class="site-nav">
+    <a href="/" class="nav-logo"><span>&gt;</span> agent_gateway</a>
+    <div class="nav-links">
+      <a href="/docs.html">Docs</a>
+      <a href="/skills.html" class="active">Skills</a>
+      <a href="https://api.tongateway.ai/docs" target="_blank">API</a>
+      <a href="/app.html" class="nav-cta">Open Dashboard</a>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <h1 class="page-title">Skills</h1>
+    <p class="page-desc">Install Agent Gateway skills to give your AI agent the ability to request TON transfers. Choose the integration method that fits your setup.</p>
+
+    <!-- MCP Server Skill -->
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-title">
+          <div class="skill-icon" style="background:rgba(59,130,246,0.08)">&#128268;</div>
+          <div>
+            <h2>MCP Server</h2>
+            <p style="font-size:12px;color:var(--text-dim);margin:2px 0 0">Model Context Protocol integration</p>
+          </div>
+        </div>
+        <div class="skill-badges">
+          <span class="badge badge-mcp">MCP</span>
+          <span class="badge badge-claude">Claude Code</span>
+          <span class="badge badge-any">Any MCP Client</span>
+        </div>
+      </div>
+
+      <p class="skill-desc">Exposes Agent Gateway tools directly to your AI agent via MCP. The agent can request transfers, check statuses, and list pending requests — no HTTP knowledge needed.</p>
+
+      <div class="note">Best for: Claude Code, Cursor, Windsurf, and any editor or agent that supports MCP servers.</div>
+
+      <div class="tabs" data-tabs="mcp">
+        <button class="tab active" data-tab="mcp-setup">Setup</button>
+        <button class="tab" data-tab="mcp-tools">Tools</button>
+        <button class="tab" data-tab="mcp-example">Example</button>
+      </div>
+
+      <div class="tab-content active" id="mcp-setup">
+        <div class="step">
+          <span class="step-num">1</span><span class="step-title">Get your token</span>
+          <div class="step-body">
+            <p>Connect your wallet on the <a href="/app.html">dashboard</a> and create a token for your agent.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span><span class="step-title">Install the MCP server</span>
+          <div class="step-body">
+<pre><code>npm install -g agent-gateway-mcp</code><button class="copy-btn" onclick="copyBlock(this)">Copy</button></pre>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span><span class="step-title">Add to your settings</span>
+          <div class="step-body">
+            <p>Add to <code>.claude/settings.json</code> or your MCP client config:</p>
+<pre><code id="mcp-config">{
+  "mcpServers": {
+    "agent-gateway": {
+      "command": "agent-gateway-mcp",
+      "env": {
+        "AGENT_GATEWAY_TOKEN": "YOUR_TOKEN_HERE",
+        "AGENT_GATEWAY_API_URL": "https://api.tongateway.ai"
+      }
+    }
+  }
+}</code><button class="copy-btn" onclick="copyBlock(this)">Copy</button></pre>
+            <p>Paste your token from step 1.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="mcp-tools">
+        <table>
+          <tr><th>Tool</th><th>Params</th><th>Description</th></tr>
+          <tr>
+            <td><code>request_transfer</code></td>
+            <td><code>to</code>, <code>amountNano</code>, <code>payloadBoc?</code></td>
+            <td>Queue a TON transfer for owner approval</td>
+          </tr>
+          <tr>
+            <td><code>get_request_status</code></td>
+            <td><code>id</code></td>
+            <td>Check if a request was approved, rejected, or pending</td>
+          </tr>
+          <tr>
+            <td><code>list_pending_requests</code></td>
+            <td>&mdash;</td>
+            <td>List all pending transfer requests</td>
+          </tr>
+        </table>
+
+        <h3>Amount reference</h3>
+        <table>
+          <tr><th>TON</th><th>nanoTON</th></tr>
+          <tr><td>0.1</td><td><code>100000000</code></td></tr>
+          <tr><td>0.5</td><td><code>500000000</code></td></tr>
+          <tr><td>1</td><td><code>1000000000</code></td></tr>
+          <tr><td>10</td><td><code>10000000000</code></td></tr>
+        </table>
+      </div>
+
+      <div class="tab-content" id="mcp-example">
+        <p>Once configured, your agent can request transfers in natural language:</p>
+<pre><code>You: Send 0.5 TON to EQD...abc
+
+Agent: I'll request that transfer for you.
+       [calls request_transfer with to="EQD...abc", amountNano="500000000"]
+
+       Transfer request created (ID: abc-123).
+       Please approve it in your Agent Gateway dashboard.
+
+You: Is it confirmed?
+
+Agent: [calls get_request_status with id="abc-123"]
+       Yes, the transfer was confirmed and signed by the wallet.</code></pre>
+      </div>
+    </div>
+
+    <!-- Claude Code Skill File -->
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-title">
+          <div class="skill-icon" style="background:rgba(192,132,252,0.08)">&#9889;</div>
+          <div>
+            <h2>Claude Code Skill</h2>
+            <p style="font-size:12px;color:var(--text-dim);margin:2px 0 0">Skill file for Claude Code / OpenClaw</p>
+          </div>
+        </div>
+        <div class="skill-badges">
+          <span class="badge badge-skill">Skill File</span>
+          <span class="badge badge-claude">Claude Code</span>
+          <span class="badge badge-openclaw">OpenClaw</span>
+        </div>
+      </div>
+
+      <p class="skill-desc">A skill file that teaches Claude Code how to use Agent Gateway. Drop it into your project and Claude will know the full API, tools, and best practices.</p>
+
+      <div class="note">Best for: Claude Code and OpenClaw users who want the agent to understand Agent Gateway without manual prompting every time.</div>
+
+      <div class="tabs" data-tabs="skill">
+        <button class="tab active" data-tab="skill-claude">Claude Code</button>
+        <button class="tab" data-tab="skill-openclaw">OpenClaw</button>
+        <button class="tab" data-tab="skill-content">Skill Content</button>
+      </div>
+
+      <div class="tab-content active" id="skill-claude">
+        <div class="step">
+          <span class="step-num">1</span><span class="step-title">Create the skills directory</span>
+          <div class="step-body">
+<pre><code>mkdir -p .claude/skills</code><button class="copy-btn" onclick="copyBlock(this)">Copy</button></pre>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span><span class="step-title">Download the skill</span>
+          <div class="step-body">
+<pre><code>curl -o .claude/skills/agent-gateway.md \
+  https://tongateway.ai/agent-gateway.md</code><button class="copy-btn" onclick="copyBlock(this)">Copy</button></pre>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span><span class="step-title">Use it</span>
+          <div class="step-body">
+            <p>Claude Code will automatically detect the skill. Ask it to <code>/agent-gateway</code> or just say "send TON" and it will know what to do.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="skill-openclaw">
+        <div class="step">
+          <span class="step-num">1</span><span class="step-title">Create the skill directory</span>
+          <div class="step-body">
+<pre><code>mkdir -p skills/agent-gateway</code><button class="copy-btn" onclick="copyBlock(this)">Copy</button></pre>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span><span class="step-title">Download the skill</span>
+          <div class="step-body">
+<pre><code>curl -o skills/agent-gateway/SKILL.md \
+  https://tongateway.ai/agent-gateway.md</code><button class="copy-btn" onclick="copyBlock(this)">Copy</button></pre>
+            <p style="margin-top:8px">Or install globally:</p>
+<pre><code>mkdir -p ~/.openclaw/skills/agent-gateway
+curl -o ~/.openclaw/skills/agent-gateway/SKILL.md \
+  https://tongateway.ai/agent-gateway.md</code><button class="copy-btn" onclick="copyBlock(this)">Copy</button></pre>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span><span class="step-title">Restart &amp; use</span>
+          <div class="step-body">
+            <p>Restart the OpenClaw gateway — skills are loaded at startup. Then just say "send TON" and the agent will use the skill.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="skill-content">
+        <p style="font-size:13px;color:var(--text-dim);margin-bottom:12px">Full content of <code>agent-gateway.md</code>:</p>
+<pre><code id="skill-source">---
+name: agent-gateway
+description: Install and use Agent Gateway — lets your AI agent
+  request TON blockchain transfers that are approved by a human
+  wallet owner via TON Connect
+---
+
+# Agent Gateway Skill
+
+Agent Gateway lets you request TON transfers from a human's wallet.
+You submit transfer requests, the wallet owner approves them.
+
+## Setup
+
+1. Get a token from https://tongateway.ai
+2. npm install -g agent-gateway-mcp
+3. Configure MCP server (see MCP Server skill above)
+
+## Tools
+
+| Tool                   | Description                        |
+|------------------------|------------------------------------|
+| request_transfer       | Queue a TON transfer for approval  |
+| get_request_status     | Check request status by ID         |
+| list_pending_requests  | List all pending requests          |
+
+## Usage
+
+request_transfer({ to: "EQD...addr", amountNano: "1000000000" })
+→ 1 TON = 1,000,000,000 nanoTON
+
+## Direct HTTP (fallback)
+
+POST https://api.tongateway.ai/v1/safe/tx/transfer
+  Authorization: Bearer TOKEN
+  { "to": "0:dest...", "amountNano": "1000000000" }
+
+## Important
+
+- You cannot sign transactions, only request them
+- Token = session, guard it like a password
+- Requests expire in 5 minutes
+- Tokens don't expire — revoke when no longer needed</code><button class="copy-btn" onclick="copyBlock(this)">Copy</button></pre>
+      </div>
+    </div>
+
+    <!-- REST API / Direct HTTP -->
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-title">
+          <div class="skill-icon" style="background:rgba(52,211,153,0.08)">&#128640;</div>
+          <div>
+            <h2>REST API</h2>
+            <p style="font-size:12px;color:var(--text-dim);margin:2px 0 0">Direct HTTP for any language or agent</p>
+          </div>
+        </div>
+        <div class="skill-badges">
+          <span class="badge badge-any">Python</span>
+          <span class="badge badge-any">JavaScript</span>
+          <span class="badge badge-any">Any Language</span>
+        </div>
+      </div>
+
+      <p class="skill-desc">Use the REST API directly when MCP is not available. Works with any language, framework, or custom agent that can make HTTP requests.</p>
+
+      <div class="note">Best for: Custom trading bots, Python scripts, Node.js agents, or any platform without MCP support. <a href="https://api.tongateway.ai/docs" target="_blank">Full Swagger docs</a></div>
+
+      <div class="tabs" data-tabs="rest">
+        <button class="tab active" data-tab="rest-python">Python</button>
+        <button class="tab" data-tab="rest-js">JavaScript</button>
+        <button class="tab" data-tab="rest-curl">cURL</button>
+      </div>
+
+      <div class="tab-content active" id="rest-python">
+<pre><code>import requests
+
+API = "https://api.tongateway.ai"
+TOKEN = "your-token-here"
+headers = {
+    "Authorization": f"Bearer {TOKEN}",
+    "Content-Type": "application/json"
+}
+
+# Request a transfer
+resp = requests.post(f"{API}/v1/safe/tx/transfer",
+    headers=headers,
+    json={
+        "to": "EQD...destination-address",
+        "amountNano": "1000000000"  # 1 TON
+    }
+)
+req = resp.json()
+print(f"Request {req['id']}: {req['status']}")
+
+# Check status
+status = requests.get(
+    f"{API}/v1/safe/tx/{req['id']}",
+    headers=headers
+)
+print(status.json()["status"])
+# "pending" | "confirmed" | "rejected"</code><button class="copy-btn" onclick="copyBlock(this)">Copy</button></pre>
+      </div>
+
+      <div class="tab-content" id="rest-js">
+<pre><code>const API = "https://api.tongateway.ai";
+const TOKEN = "your-token-here";
+const headers = {
+  "Authorization": `Bearer ${TOKEN}`,
+  "Content-Type": "application/json"
+};
+
+// Request a transfer
+const res = await fetch(`${API}/v1/safe/tx/transfer`, {
+  method: "POST",
+  headers,
+  body: JSON.stringify({
+    to: "EQD...destination-address",
+    amountNano: "1000000000" // 1 TON
+  }),
+});
+
+const { id, status } = await res.json();
+console.log(id, status); // "abc-123" "pending"
+
+// Check status
+const check = await fetch(
+  `${API}/v1/safe/tx/${id}`, { headers }
+);
+console.log((await check.json()).status);</code><button class="copy-btn" onclick="copyBlock(this)">Copy</button></pre>
+      </div>
+
+      <div class="tab-content" id="rest-curl">
+<pre><code># Set your token
+export TOKEN="your-token-here"
+export API="https://api.tongateway.ai"
+
+# Request a transfer (1 TON)
+curl -X POST $API/v1/safe/tx/transfer \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "EQD...destination-address",
+    "amountNano": "1000000000"
+  }'
+
+# Check status
+curl $API/v1/safe/tx/REQUEST_ID \
+  -H "Authorization: Bearer $TOKEN"
+
+# List all pending
+curl $API/v1/safe/tx/pending \
+  -H "Authorization: Bearer $TOKEN"</code><button class="copy-btn" onclick="copyBlock(this)">Copy</button></pre>
+      </div>
+    </div>
+
+    <!-- Endpoints Quick Reference -->
+    <section class="card">
+      <h2 style="margin-top:0;font-size:16px;color:var(--text-bright)">Endpoints Quick Reference</h2>
+      <p style="font-size:13px;color:var(--text-dim);margin-bottom:12px">All <code>/v1/safe/*</code> endpoints require <code>Authorization: Bearer TOKEN</code>. <a href="https://api.tongateway.ai/docs" target="_blank">Full Swagger docs</a></p>
+      <table>
+        <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+        <tr><td><code>POST</code></td><td><code>/v1/safe/tx/transfer</code></td><td>Request a TON transfer</td></tr>
+        <tr><td><code>GET</code></td><td><code>/v1/safe/tx/pending</code></td><td>List pending requests</td></tr>
+        <tr><td><code>GET</code></td><td><code>/v1/safe/tx/:id</code></td><td>Get request by ID</td></tr>
+        <tr><td><code>POST</code></td><td><code>/v1/safe/tx/:id/confirm</code></td><td>Confirm (after wallet signs)</td></tr>
+        <tr><td><code>POST</code></td><td><code>/v1/safe/tx/:id/reject</code></td><td>Reject a request</td></tr>
+      </table>
+    </section>
+  </div>
+
+  <footer class="site-footer">
+    <div class="left">&copy; 2026 Agent Gateway &middot; TON Blockchain</div>
+    <div class="right">
+      <a href="/docs.html">Docs</a>
+      <a href="/skills.html">Skills</a>
+      <a href="https://api.tongateway.ai/docs" target="_blank">API</a>
+      <a href="/app.html">Dashboard</a>
+    </div>
+  </footer>
+
+  <script>
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const group = tab.closest('.skill-card, .card');
+        group.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        group.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Copy to clipboard
+    function copyBlock(btn) {
+      const code = btn.closest('pre').querySelector('code');
+      navigator.clipboard.writeText(code.textContent).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
