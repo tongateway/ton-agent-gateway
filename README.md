@@ -11,7 +11,7 @@ A secure gateway that lets AI agents request TON blockchain transactions while w
 | [ton-agent-gateway-api](https://github.com/pewpewgogo/ton-agent-gateway-api) | Cloudflare Worker API and skill definitions |
 | [ton-agent-gateway-client](https://github.com/pewpewgogo/ton-agent-gateway-client) | Dashboard and landing page (tongateway.ai) |
 | [ton-agent-gateway-contract](https://github.com/pewpewgogo/ton-agent-gateway-contract) | AgentVault smart contract (FunC) |
-| [agent-gateway-mcp](https://github.com/tongateway/agent-gateway-mcp) | MCP server for AI agents (`npm install -g agent-gateway-mcp`) |
+| [@tongateway/mcp](https://github.com/tongateway/mcp) | MCP server for AI agents (`npm install -g @tongateway/mcp`) |
 
 ## How it works
 
@@ -23,5 +23,5 @@ A secure gateway that lets AI agents request TON blockchain transactions while w
 ## Integration
 
 - **REST API** — `POST /v1/safe/tx/transfer` with `Authorization: Bearer TOKEN`
-- **MCP Server** — `npm install -g agent-gateway-mcp` for Claude, OpenClaw, and other MCP-compatible agents
+- **MCP Server** — `npm install -g @tongateway/mcp` for Claude, OpenClaw, and other MCP-compatible agents
 - **Claude Code Skill** — install from [tongateway.ai/skills.html](https://tongateway.ai/skills.html)
