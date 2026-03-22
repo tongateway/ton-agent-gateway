@@ -30,7 +30,7 @@ No private keys shared with agents. Token persists across restarts.
 
 | Mode | How it works | Use case |
 |------|-------------|----------|
-| **Safe** (default) | Agent requests transfer → you approve on phone | Day-to-day transfers |
+| **Safe** (default) | Agent requests transfer → you approve on phone | Day-to-day tasks |
 | **Autonomous** | Agent deploys its own wallet, signs transfers directly | Trading bots, automated systems |
 
 ## 14 MCP Tools
